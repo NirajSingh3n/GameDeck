@@ -24,6 +24,7 @@ import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import android.app.Activity
 
 class ScreenRecorderService : Service() {
 
@@ -62,14 +63,14 @@ class ScreenRecorderService : Service() {
             return START_NOT_STICKY
         }
 
-        val code = intent?.getIntExtra("code", RESULT_CANCELED) ?: RESULT_CANCELED
+        val code = intent?.getIntExtra("code", Activity.RESULT_CANCELED) ?: Activity.RESULT_CANCELED
         val data: Intent? = if (Build.VERSION.SDK_INT >= 33) {
             intent?.getParcelableExtra("data", Intent::class.java)
         } else {
             @Suppress("DEPRECATION")
             intent?.getParcelableExtra("data")
         }
-        if (code != RESULT_OK || data == null) {
+        if (code != Activity.RESULT_OK || data == null) {
             stopSelf()
             return START_NOT_STICKY
         }
